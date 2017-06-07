@@ -184,6 +184,11 @@ namespace PotterShoppingCart.Tests
     {
         public static decimal Bill(this List<Book> books)
         {
+            if (books.Any() == false)
+            {
+                return 0;
+            }
+
             // 先依照冊來分組(因為折扣是按照有幾本不同的)
             var booksGroup = books.GroupBy(r => r.Volume).ToList();
 
@@ -212,6 +217,8 @@ namespace PotterShoppingCart.Tests
         {
             switch (count)
             {
+                case 0:
+                    return 0;
                 case 1:
                     return 1;
                 case 2:
