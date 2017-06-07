@@ -160,9 +160,14 @@ namespace PotterShoppingCart.Tests
     {
         public static decimal Bill(this List<Book> books)
         {
+            var booksGroup = books.GroupBy(r => r.Volume).Where(r => r.Any());
             if (books.Count == 1)
             {
                 return books.Sum(r => r.Price);
+            }
+            if (booksGroup.Count() == 2)
+            {
+                return books.Sum(r => r.Price) * (decimal)0.95;
             }
             throw new NotImplementedException();
         }
