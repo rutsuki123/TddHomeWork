@@ -165,28 +165,50 @@ namespace PotterShoppingCart.Tests
     {
         public static decimal Bill(this List<Book> books)
         {
-            var booksGroup = books.GroupBy(r => r.Volume).Where(r => r.Any());
-            if (books.Count == 1)
-            {
-                return books.Sum(r => r.Price);
-            }
-            if (booksGroup.Count() == 2)
-            {
-                return books.Sum(r => r.Price) * (decimal)0.95;
-            }
-            if (booksGroup.Count() == 3)
-            {
-                return books.Sum(r => r.Price) * (decimal)0.9;
-            }
-            if (booksGroup.Count() == 4)
-            {
-                return books.Sum(r => r.Price) * (decimal)0.8;
-            }
-            if (booksGroup.Count() == 5)
-            {
-                return books.Sum(r => r.Price) * (decimal)0.75;
-            }
+            var booksGroup = books.GroupBy(r => r.Volume).Where(r => r.Any()).ToList();
+            var discount = GetDiscount(booksGroup.Count());
+            return books.Sum(r => r.Price) * discount;
+
+            //if (books.Count == 1)
+            //{
+            //    return books.Sum(r => r.Price);
+            //}
+            //if (booksGroup.Count() == 2)
+            //{
+            //    return books.Sum(r => r.Price) * (decimal)0.95;
+            //}
+            //if (booksGroup.Count() == 3)
+            //{
+            //    return books.Sum(r => r.Price) * (decimal)0.9;
+            //}
+            //if (booksGroup.Count() == 4)
+            //{
+            //    return books.Sum(r => r.Price) * (decimal)0.8;
+            //}
+            //if (booksGroup.Count() == 5)
+            //{
+            //    return books.Sum(r => r.Price) * (decimal)0.75;
+            //}
             throw new NotImplementedException();
+        }
+
+        private static decimal GetDiscount(int count)
+        {
+            switch (count)
+            {
+                case 1:
+                    return 1;
+                case 2:
+                    return (decimal)0.95;
+                case 3:
+                    return (decimal)0.90;
+                case 4:
+                    return (decimal)0.80;
+                case 5:
+                    return (decimal)0.75;
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }
