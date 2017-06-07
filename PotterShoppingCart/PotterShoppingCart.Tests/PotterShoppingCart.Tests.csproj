@@ -55,20 +55,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCartTest.cs" />
-    <Compile Include="ShoppingCartTest.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ShoppingCartTest.feature</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="User Story.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ShoppingCartTest.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>ShoppingCartTest.feature.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

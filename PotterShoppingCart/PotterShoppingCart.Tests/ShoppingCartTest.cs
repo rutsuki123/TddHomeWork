@@ -128,29 +128,31 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 370;
+            Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //public void 第一集買了一本_第二三集各買了兩本_價格應為100_X_3_X_0點9_加_100_X_2_X_0點95_等於_460()
-        //{
-        //    // arrange
-        //    var order = new List<Book>()
-        //    {
-        //        new Book(){Volume = 1,Price = 100},
-        //        new Book(){Volume = 2,Price = 100},
-        //        new Book(){Volume = 2,Price = 100},
-        //        new Book(){Volume = 3,Price = 100},
-        //        new Book(){Volume = 3,Price = 100},
-        //    };
+        [TestMethod]
+        public void 第一集買了一本_第二三集各買了兩本_價格應為100_X_3_X_0點9_加_100_X_2_X_0點95_等於_460()
+        {
+            // arrange
+            var order = new List<Book>()
+            {
+                new Book(){Volume = 1,Price = 100},
+                new Book(){Volume = 2,Price = 100},
+                new Book(){Volume = 2,Price = 100},
+                new Book(){Volume = 3,Price = 100},
+                new Book(){Volume = 3,Price = 100},
+            };
 
-        //    // actual
-        //    var actual = order.Bill();
+            // actual
+            var actual = order.Bill();
 
-        //    // assert
-        //    var expected = 460;
-        //    Assert.AreEqual(expected, actual);
-        //}
+            // assert
+            var expected = 460;
+            Console.WriteLine($"{actual};{expected}");
+            Assert.AreEqual(expected, actual);
+        }
     }
 
 
@@ -167,6 +169,7 @@ namespace PotterShoppingCart.Tests
         {
             // 先依照冊來分組(因為折扣是按照有幾本不同的)
             var booksGroup = books.GroupBy(r => r.Volume).ToList();
+
             // 從分組的組別數量取得優惠折扣
             var discount = GetPreferential(booksGroup.Count());
 
@@ -177,7 +180,7 @@ namespace PotterShoppingCart.Tests
             var oneGroupPrice = booksGroup.SelectMany(r => r.Take(1)).Select(r => r.Price).Aggregate((a, b) => a + b);
             totalPrice += oneGroupPrice * discount;
 
-            // 每組拿掉一筆, 如果還有代表還可以繼續計算折扣
+            // 每組拿掉一筆, 如果還有項目, 代表還可以繼續計算金額
             var temp = booksGroup.SelectMany(r => r.Skip(1)).ToList();
             if (temp.Any())
             {
@@ -186,28 +189,6 @@ namespace PotterShoppingCart.Tests
             
             // 結果
             return totalPrice;
-
-            //if (books.Count == 1)
-            //{
-            //    return books.Sum(r => r.Price);
-            //}
-            //if (booksGroup.Count() == 2)
-            //{
-            //    return books.Sum(r => r.Price) * (decimal)0.95;
-            //}
-            //if (booksGroup.Count() == 3)
-            //{
-            //    return books.Sum(r => r.Price) * (decimal)0.9;
-            //}
-            //if (booksGroup.Count() == 4)
-            //{
-            //    return books.Sum(r => r.Price) * (decimal)0.8;
-            //}
-            //if (booksGroup.Count() == 5)
-            //{
-            //    return books.Sum(r => r.Price) * (decimal)0.75;
-            //}
-            throw new NotImplementedException();
         }
 
         private static decimal GetPreferential(int count)
