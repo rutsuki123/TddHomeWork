@@ -111,25 +111,25 @@ namespace PotterShoppingCart.Tests
             Assert.AreEqual(actual, expected);
         }
 
-        //[TestMethod]
-        //public void 一二集各買了一本_第三集買了兩本_價格應為100_X_3_X_0點9_加_100_等於_370()
-        //{
-        //    // arrange
-        //    var order = new List<Book>()
-        //    {
-        //        new Book(){Volume = 1,Price = 100},
-        //        new Book(){Volume = 2,Price = 100},
-        //        new Book(){Volume = 3,Price = 100},
-        //        new Book(){Volume = 3,Price = 100},
-        //    };
+        [TestMethod]
+        public void 一二集各買了一本_第三集買了兩本_價格應為100_X_3_X_0點9_加_100_等於_370()
+        {
+            // arrange
+            var order = new List<Book>()
+            {
+                new Book(){Volume = 1,Price = 100},
+                new Book(){Volume = 2,Price = 100},
+                new Book(){Volume = 3,Price = 100},
+                new Book(){Volume = 3,Price = 100},
+            };
 
-        //    // actual
-        //    var actual = order.Bill();
+            // actual
+            var actual = order.Bill();
 
-        //    // assert
-        //    var expected = 370;
-        //    Assert.AreEqual(actual, expected);
-        //}
+            // assert
+            var expected = 370;
+            Assert.AreEqual(actual, expected);
+        }
 
         //[TestMethod]
         //public void 第一集買了一本_第二三集各買了兩本_價格應為100_X_3_X_0點9_加_100_X_2_X_0點95_等於_460()
