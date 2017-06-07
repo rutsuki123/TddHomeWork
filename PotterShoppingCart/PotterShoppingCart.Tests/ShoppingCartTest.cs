@@ -169,6 +169,10 @@ namespace PotterShoppingCart.Tests
             {
                 return books.Sum(r => r.Price) * (decimal)0.95;
             }
+            if (booksGroup.Count() == 3)
+            {
+                return books.Sum(r => r.Price) * (decimal)0.9;
+            }
             throw new NotImplementedException();
         }
     }
