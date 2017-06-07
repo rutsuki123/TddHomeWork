@@ -27,7 +27,7 @@ namespace PotterShoppingCart.Tests
             // assert
             var expected = 100;
             Console.WriteLine($"{actual};{expected}");
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace PotterShoppingCart.Tests
             // assert
             var expected = 190;
             Console.WriteLine($"{actual};{expected}");
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace PotterShoppingCart.Tests
             // assert
             var expected = 270;
             Console.WriteLine($"{actual};{expected}");
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace PotterShoppingCart.Tests
             // assert
             var expected = 320;
             Console.WriteLine($"{actual};{expected}");
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace PotterShoppingCart.Tests
             // assert
             var expected = 375;
             Console.WriteLine($"{actual};{expected}");
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 370;
-            Assert.AreEqual(actual, expected);
+            Assert.AreEqual(expected, actual);
         }
 
         //[TestMethod]
@@ -149,7 +149,7 @@ namespace PotterShoppingCart.Tests
 
         //    // assert
         //    var expected = 460;
-        //    Assert.AreEqual(actual, expected);
+        //    Assert.AreEqual(expected, actual);
         //}
     }
 
@@ -165,9 +165,27 @@ namespace PotterShoppingCart.Tests
     {
         public static decimal Bill(this List<Book> books)
         {
-            var booksGroup = books.GroupBy(r => r.Volume).Where(r => r.Any()).ToList();
-            var discount = GetDiscount(booksGroup.Count());
-            return books.Sum(r => r.Price) * discount;
+            // 先依照冊來分組(因為折扣是按照有幾本不同的)
+            var booksGroup = books.GroupBy(r => r.Volume).ToList();
+            // 從分組的組別數量取得優惠折扣
+            var discount = GetPreferential(booksGroup.Count());
+
+            // 總價錢
+            var totalPrice = default(decimal);
+
+            // 計算這組的總金額
+            var oneGroupPrice = booksGroup.SelectMany(r => r.Take(1)).Select(r => r.Price).Aggregate((a, b) => a + b);
+            totalPrice += oneGroupPrice * discount;
+
+            // 每組拿掉一筆, 如果還有代表還可以繼續計算折扣
+            var temp = booksGroup.SelectMany(r => r.Skip(1)).ToList();
+            if (temp.Any())
+            {
+                totalPrice += temp.Bill();
+            }
+            
+            // 結果
+            return totalPrice;
 
             //if (books.Count == 1)
             //{
@@ -192,7 +210,7 @@ namespace PotterShoppingCart.Tests
             throw new NotImplementedException();
         }
 
-        private static decimal GetDiscount(int count)
+        private static decimal GetPreferential(int count)
         {
             switch (count)
             {
