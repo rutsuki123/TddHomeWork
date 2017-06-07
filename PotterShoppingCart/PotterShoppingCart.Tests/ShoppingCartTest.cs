@@ -26,6 +26,7 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 100;
+            Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(actual, expected);
         }
 
@@ -44,6 +45,7 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 190;
+            Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(actual, expected);
         }
 
@@ -62,6 +64,7 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 270;
+            Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(actual, expected);
         }
 
@@ -82,6 +85,7 @@ namespace PotterShoppingCart.Tests
 
             // assert
             var expected = 320;
+            Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(actual, expected);
         }
 
@@ -172,6 +176,10 @@ namespace PotterShoppingCart.Tests
             if (booksGroup.Count() == 3)
             {
                 return books.Sum(r => r.Price) * (decimal)0.9;
+            }
+            if (booksGroup.Count() == 4)
+            {
+                return books.Sum(r => r.Price) * (decimal)0.8;
             }
             throw new NotImplementedException();
         }
