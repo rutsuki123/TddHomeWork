@@ -153,6 +153,23 @@ namespace PotterShoppingCart.Tests
             Console.WriteLine($"{actual};{expected}");
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void 什麼都沒買_價格應為0()
+        {
+            // arrange
+            var order = new List<Book>()
+            {
+            };
+
+            // actual
+            var actual = order.Bill();
+
+            // assert
+            var expected = 0;
+            Console.WriteLine($"{actual};{expected}");
+            Assert.AreEqual(expected, actual);
+        }
     }
 
 
@@ -186,7 +203,7 @@ namespace PotterShoppingCart.Tests
             {
                 totalPrice += temp.Bill();
             }
-            
+
             // 結果
             return totalPrice;
         }
